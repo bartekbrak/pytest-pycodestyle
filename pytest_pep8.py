@@ -40,6 +40,10 @@ class Pep8Error(Exception):
     """ indicates an error during pep8 checks. """
 
 class Pep8Item(pytest.Item, pytest.File):
+    def __init__(self, path, parent):
+        super(Pep8Item, self).__init__(path, parent)
+        self.keywords['pep8'] = True
+
     def runtest(self):
         call = py.io.StdCapture.call
         pep8ignores = self.config._pep8ignores

@@ -18,24 +18,38 @@ discovered and checked, starting from the command line arguments::
     py.test --pep8 mysourcedir # or
     py.test --pep8 mysourcedir/somefile.py
 
-If you pass the ``--pep8`` option you will see the current list of
-default "ignores", used when invoking the ``pep8.py`` based checking::
+Running PEP8 checks and no other tests
+---------------------------------------------
 
-    pep8
-     
+You can also restrict your tests to only run "pep8" tests and not
+your other tests by typing::
 
-Per-Project PEP8 checking configuration
---------------------------------------------
+    py.test --pep8 -k pep8
 
-You can configure PEP8-checking options for your project
+This will only run tests that are marked with the "pep8" keyword
+which is added for the pep8 test items added by this plugin.
+
+Looking at currently active PEP8 options
+---------------------------------------------
+
+Note that in the testing header you will see the current list of default "ignores"::
+
+    pep8 ignore opts: E202 E221 E222 E241 E301 E302 E401 E501 E701 W293 W391 W601 W602
+
+For the meaning of these error and warning codes, see the error output
+when running against your files or checkout `pep8.py
+<https://github.com/jcrocholl/pep8/blob/master/pep8.py>`_.
+
+Configuring PEP8 options per-project
+---------------------------------------------
+
+Lastly, you may configure PEP8-checking options for your project
 by adding an ``pep8options`` entry to your ``pytest.ini``
 or ``setup.cfg`` file like this::
 
     [pytest]
     pep8options = +W293 -E200
 
-For meanings of Error codes refer to http://pypi.python.org/pypi/pep8
-and the error message that you get.
 
 Notes
 -------------

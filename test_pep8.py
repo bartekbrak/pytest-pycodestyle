@@ -45,3 +45,15 @@ def test_ok_verbose(testdir):
     ])
     assert result.ret == 0
 
+def test_keyword_match(testdir):
+    testdir.makepyfile("""
+        def test_hello():
+            a=[ 1,123]
+            #
+    """)
+    result = testdir.runpytest("--pep8", "-k pep8")
+    result.stdout.fnmatch_lines([
+        "*E201*",
+        "*1 failed*",
+    ])
+    assert 'passed' not in result.stdout.str()
