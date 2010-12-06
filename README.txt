@@ -25,37 +25,45 @@ you can run it with::
     $ py.test --pep8
     =========================== test session starts ============================
     platform linux2 -- Python 2.6.5 -- pytest-2.0.1.dev1
-    pep8 ignore opts: E202 E221 E222 E241 E301 E302 E401 E501 E701 W293 W391 W601 W602
+    pep8 ignore opts: (performing all available checks)
     collecting ... collected 1 items
     
     myfile.py F
     
     ================================= FAILURES =================================
     ________________________________ PEP8-check ________________________________
-    /tmp/doc-exec-12/myfile.py:2:10: E201 whitespace after '('
+    /tmp/doc-exec-19/myfile.py:2:10: E201 whitespace after '('
     somefunc( 123,456)
              ^
-    /tmp/doc-exec-12/myfile.py:2:14: E231 missing whitespace after ','
+    /tmp/doc-exec-19/myfile.py:2:14: E231 missing whitespace after ','
     somefunc( 123,456)
                  ^
     
     ========================= 1 failed in 0.01 seconds =========================
 
-Note that in the testing header you see the current list of default "ignores".
-For the meaning of these error and warning codes, see the error output
-when running against your files or checkout `pep8.py
+In the testing header you will always see the list of pep8 checks that are ignored
+(non by default).  For the meaning of these error and warning codes, see the error
+output when running against your files or checkout `pep8.py
 <https://github.com/jcrocholl/pep8/blob/master/pep8.py>`_.
 
 Configuring PEP8 options per-project
 ---------------------------------------------
 
-Lastly, you may configure PEP8-checking options for your project
-by adding an ``pep8options`` entry to your ``pytest.ini``
+You may configure PEP8-checking options for your project
+by adding an ``pep8ignore`` entry to your ``pytest.ini``
 or ``setup.cfg`` file like this::
 
+    # content of pytest.ini
     [pytest]
-    pep8options = +W293 -E200
+    pep8ignore = E201 E231
 
+This would prevent complaints about some whitespace issues (see above).
+Rerunning it with the above example will now look better:
+
+    $ py.test -q --pep8
+    collecting ... collected 1 items
+    .
+    1 passed in 0.01 seconds
 
 Running PEP8 checks and no other tests
 ---------------------------------------------

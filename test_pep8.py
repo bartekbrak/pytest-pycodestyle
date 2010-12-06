@@ -14,18 +14,15 @@ def test_simple(testdir):
             
         # too many spaces
     """)
-    testdir.makeini("""
-        [pytest]
-        pep8options = +W293
-    """)
     result = testdir.runpytest("--pep8", )
     result.stdout.fnmatch_lines([
+        "*pep*ignore*available*",
         "*W293*",
     ])
     assert result.ret != 0
     testdir.makeini("""
         [pytest]
-        pep8options = -W293
+        pep8ignore = W293
     """)
     result = testdir.runpytest("--pep8", )
     result.stdout.fnmatch_lines([

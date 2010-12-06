@@ -1,14 +1,14 @@
 import pep8
 import py, pytest
 
-__version__ = '0.6'
+__version__ = '0.7'
 
 def pytest_addoption(parser):
     group = parser.getgroup("general")
     group.addoption('--pep8', action='store_true',
         help="perform some pep8 sanity checks on .py files")
-    parser.addini("pep8options", type="args",
-        help="enable/disable warnings/errors: e.g. +W293 and -W293")
+    parser.addini("pep8ignore", type="args",
+        help="warning/errors to ignore, example value: W293 W292")
 
 def pytest_collect_file(path, parent):
     if parent.config.option.pep8 and path.ext == '.py':
@@ -16,25 +16,16 @@ def pytest_collect_file(path, parent):
 
 def pytest_configure(config):
     if config.option.pep8:
-        # defaults taken from MoinMoin + own
-        pep8ignores = set("E202,E221,E222,E241,E301,E302,E401,E501,"
-            "E701,W391,W601,W602,W293".split(","))
-        for opt in config.getini("pep8options"):
-            if opt[0] == "-":
-                pep8ignores.add(opt[1:])
-            else:
-                if opt[0] == "+":
-                    opt = opt[1:]
-                try:
-                    pep8ignores.remove(opt)
-                except KeyError:
-                    pass
-        config._pep8ignores = pep8ignores
+        config._pep8ignore = config.getini("pep8ignore")
 
 def pytest_report_header(config):
-    pep8ignores = getattr(config, '_pep8ignores', None)
-    if pep8ignores:
-        return "pep8 ignore opts: %s" %(" ".join(sorted(pep8ignores)))
+    pep8ignore = getattr(config, '_pep8ignore', None)
+    if pep8ignore is not None:
+        if pep8ignore:
+            pep8ignore = " ".join(pep8ignore)
+        else:
+            pep8ignore = "(performing all available checks)"
+        return "pep8 ignore opts: " + pep8ignore
 
 class Pep8Error(Exception):
     """ indicates an error during pep8 checks. """
@@ -46,8 +37,8 @@ class Pep8Item(pytest.Item, pytest.File):
 
     def runtest(self):
         call = py.io.StdCapture.call
-        pep8ignores = self.config._pep8ignores
-        found_errors, out, err = call(check_file, self.fspath, pep8ignores)
+        pep8ignore = self.config._pep8ignore
+        found_errors, out, err = call(check_file, self.fspath, pep8ignore)
         if found_errors:
             raise Pep8Error(out, err)
 
@@ -59,10 +50,9 @@ class Pep8Item(pytest.Item, pytest.File):
     def reportinfo(self):
         return (self.fspath, -1, "PEP8-check")
 
-def check_file(path, pep8ignores):
+def check_file(path, pep8ignore):
     pep8.process_options(['pep8',
-        # ignore list taken from moin
-        '--ignore=%s' % (",".join(pep8ignores)),
+        '--ignore=%s' % (",".join(pep8ignore)),
         '--show-source',
         '--repeat',
         'dummy file',

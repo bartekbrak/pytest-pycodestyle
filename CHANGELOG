@@ -1,3 +1,11 @@
+0.7
+----------------------------------------------
+
+- change defaults and ini-file option name:
+  now all pep8 checks are enabled and need to
+  be explicitely ignored through a "pep8ignore" setting
+  in the ini file.
+  
 0.6
 ----------------------------------------------
 
