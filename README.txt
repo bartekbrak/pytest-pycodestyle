@@ -32,10 +32,10 @@ you can run it with::
     
     ================================= FAILURES =================================
     ________________________________ PEP8-check ________________________________
-    /tmp/doc-exec-19/myfile.py:2:10: E201 whitespace after '('
+    /tmp/doc-exec-20/myfile.py:2:10: E201 whitespace after '('
     somefunc( 123,456)
              ^
-    /tmp/doc-exec-19/myfile.py:2:14: E231 missing whitespace after ','
+    /tmp/doc-exec-20/myfile.py:2:14: E231 missing whitespace after ','
     somefunc( 123,456)
                  ^
     
@@ -58,7 +58,7 @@ or ``setup.cfg`` file like this::
     pep8ignore = E201 E231
 
 This would prevent complaints about some whitespace issues (see above).
-Rerunning it with the above example will now look better:
+Rerunning it with the above example will now look better::
 
     $ py.test -q --pep8
     collecting ... collected 1 items
