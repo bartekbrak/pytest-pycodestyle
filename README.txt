@@ -1,4 +1,4 @@
-py.test plugin for checking PEP8 source code compliance using the pep8 module.
+py.test plugin for checking PEP8 source code compliance using the `pep8 module <http://pypi.python.org/pypi/pep8>`_.
 
 Usage
 ---------
@@ -13,29 +13,35 @@ and then type::
     py.test --pep8
     
 to activate source code checking. Every file ending in ``.py`` will be
-discovered and checked, starting from the command line arguments::
+discovered and checked, starting from the command line arguments.
+For example, if you have a file like this::
 
-    py.test --pep8 mysourcedir # or
-    py.test --pep8 mysourcedir/somefile.py
+    # content of myfile.py
+ 
+    somefunc( 123,456)
 
-Running PEP8 checks and no other tests
----------------------------------------------
+you can run it with::
 
-You can also restrict your tests to only run "pep8" tests and not
-your other tests by typing::
-
-    py.test --pep8 -k pep8
-
-This will only run tests that are marked with the "pep8" keyword
-which is added for the pep8 test items added by this plugin.
-
-Looking at currently active PEP8 options
----------------------------------------------
-
-Note that in the testing header you will see the current list of default "ignores"::
-
+    $ py.test --pep8
+    =========================== test session starts ============================
+    platform linux2 -- Python 2.6.5 -- pytest-2.0.1.dev1
     pep8 ignore opts: E202 E221 E222 E241 E301 E302 E401 E501 E701 W293 W391 W601 W602
+    collecting ... collected 1 items
+    
+    myfile.py F
+    
+    ================================= FAILURES =================================
+    ________________________________ PEP8-check ________________________________
+    /tmp/doc-exec-12/myfile.py:2:10: E201 whitespace after '('
+    somefunc( 123,456)
+             ^
+    /tmp/doc-exec-12/myfile.py:2:14: E231 missing whitespace after ','
+    somefunc( 123,456)
+                 ^
+    
+    ========================= 1 failed in 0.01 seconds =========================
 
+Note that in the testing header you see the current list of default "ignores".
 For the meaning of these error and warning codes, see the error output
 when running against your files or checkout `pep8.py
 <https://github.com/jcrocholl/pep8/blob/master/pep8.py>`_.
@@ -50,6 +56,17 @@ or ``setup.cfg`` file like this::
     [pytest]
     pep8options = +W293 -E200
 
+
+Running PEP8 checks and no other tests
+---------------------------------------------
+
+You can also restrict your test run to only perform "pep8" tests
+and not any other tests by typing::
+
+    py.test --pep8 -k pep8
+
+This will only run tests that are marked with the "pep8" keyword
+which is added for the pep8 test items added by this plugin.
 
 Notes
 -------------

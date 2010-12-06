@@ -1,7 +1,7 @@
 import pep8
 import py, pytest
 
-__version__ = "0.5"
+__version__ = '0.6'
 
 def pytest_addoption(parser):
     group = parser.getgroup("general")
@@ -80,4 +80,3 @@ class PyTestChecker(pep8.Checker):
         if pep8.ignore_code(text[:4]):
             self.ignored_errors += 1
         pep8.Checker.report_error(self, line_number, offset, text, check)
-
