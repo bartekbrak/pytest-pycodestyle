@@ -1,6 +1,10 @@
 
 pytest_plugins = "pytester",
 
+def test_version():
+    import pytest_pep8
+    assert pytest_pep8.__version__
+
 def test_simple(testdir):
     testdir.makepyfile("""
         class AClass:
@@ -10,11 +14,24 @@ def test_simple(testdir):
             
         # too many spaces
     """)
-    result = testdir.runpytest("--pep8")
+    testdir.makeini("""
+        [pytest]
+        pep8options = +W293
+    """)
+    result = testdir.runpytest("--pep8", )
     result.stdout.fnmatch_lines([
         "*W293*",
     ])
     assert result.ret != 0
+    testdir.makeini("""
+        [pytest]
+        pep8options = -W293
+    """)
+    result = testdir.runpytest("--pep8", )
+    result.stdout.fnmatch_lines([
+        "*pep8*ignore*W293*",
+    ])
+    assert result.ret == 0
 
 def test_ok_verbose(testdir):
     p = testdir.makepyfile("""
