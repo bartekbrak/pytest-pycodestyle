@@ -60,8 +60,7 @@ def check_file(path, pep8ignore):
     checker = PyTestChecker(str(path))
     #XXX: bails out on death
     error_count = checker.check_all()
-    ignored = checker.ignored_errors
-    return max(error_count - ignored, 0)
+    return error_count
 
 class PyTestChecker(pep8.Checker):
     ignored_errors = 0

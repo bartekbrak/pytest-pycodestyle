@@ -18,6 +18,7 @@ def test_simple(testdir):
     result.stdout.fnmatch_lines([
         "*pep*ignore*available*",
         "*W293*",
+        "*W292*",
     ])
     assert result.ret != 0
     testdir.makeini("""
@@ -27,6 +28,15 @@ def test_simple(testdir):
     result = testdir.runpytest("--pep8", )
     result.stdout.fnmatch_lines([
         "*pep8*ignore*W293*",
+    ])
+    assert result.ret != 0
+    testdir.makeini("""
+        [pytest]
+        pep8ignore = W292 W293
+    """)
+    result = testdir.runpytest("--pep8", )
+    result.stdout.fnmatch_lines([
+        "*pep8*ignore*W292*W293*",
     ])
     assert result.ret == 0
 
