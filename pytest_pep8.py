@@ -1,7 +1,7 @@
 import pep8
 import py, pytest
 
-__version__ = '0.7'
+__version__ = '0.8'
 
 def pytest_addoption(parser):
     group = parser.getgroup("general")
