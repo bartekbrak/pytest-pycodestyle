@@ -1,44 +1,50 @@
 
 pytest_plugins = "pytester",
 
+
 def test_version():
     import pytest_pep8
     assert pytest_pep8.__version__
 
-def test_simple(testdir):
-    testdir.makepyfile("""
-        class AClass:
-            pass
-            
-            
-            
-        # too many spaces
-    """)
-    result = testdir.runpytest("--pep8", )
-    result.stdout.fnmatch_lines([
-        "*pep*ignore*available*",
-        "*W293*",
-        "*W292*",
-    ])
-    assert result.ret != 0
-    testdir.makeini("""
-        [pytest]
-        pep8ignore = W293
-    """)
-    result = testdir.runpytest("--pep8", )
-    result.stdout.fnmatch_lines([
-        "*pep8*ignore*W293*",
-    ])
-    assert result.ret != 0
-    testdir.makeini("""
-        [pytest]
-        pep8ignore = W292 W293
-    """)
-    result = testdir.runpytest("--pep8", )
-    result.stdout.fnmatch_lines([
-        "*pep8*ignore*W292*W293*",
-    ])
-    assert result.ret == 0
+
+class TestSimple:
+    def pytest_funcarg__example(self, request):
+        testdir = request.getfuncargvalue("testdir")
+        p = testdir.makepyfile("")
+        p.write("class AClass:\n    pass\n       \n\n#too many spaces")
+        return p
+
+    def test_w293w292(self, testdir, example):
+        result = testdir.runpytest("--pep8", )
+        result.stdout.fnmatch_lines([
+            "*pep*ignore*available*",
+            "*W293*",
+            "*W292*",
+        ])
+        assert result.ret != 0
+
+    def test_w293_ignore(self, testdir, example):
+        testdir.makeini("""
+            [pytest]
+            pep8ignore = W293
+        """)
+        result = testdir.runpytest("--pep8", )
+        result.stdout.fnmatch_lines([
+            "*pep8*ignore*W293*",
+        ])
+        assert result.ret != 0
+
+    def test_ignore_w293_w292(self, testdir, example):
+        testdir.makeini("""
+            [pytest]
+            pep8ignore = W292 W293
+        """)
+        result = testdir.runpytest("--pep8", )
+        result.stdout.fnmatch_lines([
+            "*pep8*ignore*W292*W293*",
+        ])
+        assert result.ret == 0
+
 
 def test_ok_verbose(testdir):
     p = testdir.makepyfile("""
@@ -51,6 +57,7 @@ def test_ok_verbose(testdir):
         "*test_ok_verbose*PEP8-check*",
     ])
     assert result.ret == 0
+
 
 def test_keyword_match(testdir):
     testdir.makepyfile("""
