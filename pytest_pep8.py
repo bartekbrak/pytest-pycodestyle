@@ -2,7 +2,7 @@ import pep8
 import py
 import pytest
 
-__version__ = '0.9'
+__version__ = '0.9.1'
 
 
 def pytest_addoption(parser):
