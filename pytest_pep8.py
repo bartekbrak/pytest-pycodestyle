@@ -59,20 +59,5 @@ class Pep8Item(pytest.Item, pytest.File):
 
 
 def check_file(path, pep8ignore):
-    options, args = pep8.process_options([
-        '--ignore=%s' % (",".join(pep8ignore)),
-        '--show-source',
-        str(path),
-    ])
-    del options.filename
-    checker = PyTestChecker(args[0], **options.__dict__)
+    checker = pep8.Checker(str(path), ignore=pep8ignore, show_source=1)
     return checker.check_all()
-
-
-class PyTestChecker(pep8.Checker):
-    ignored_errors = 0
-    #def report_error(self, line_number, offset, text, check):
-    #    # XXX hack
-    #    if pep8.ignore_code(text[:4]):
-    #        self.ignored_errors += 1
-    #    pep8.Checker.report_error(self, line_number, offset, text, check)
