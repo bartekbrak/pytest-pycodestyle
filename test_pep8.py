@@ -7,43 +7,72 @@ def test_version():
     assert pytest_pep8.__version__
 
 
-class TestSimple:
+class TestIgnores:
     def pytest_funcarg__example(self, request):
         testdir = request.getfuncargvalue("testdir")
         p = testdir.makepyfile("")
         p.write("class AClass:\n    pass\n       \n\n#too many spaces")
         return p
 
+    def test_ignores(self, tmpdir):
+        from pytest_pep8 import Ignorer
+        ignores = ["E203", "b/?.py E204 W205", "z.py ALL", "*.py E300"]
+        ign = Ignorer(ignores)
+        assert ign(tmpdir.join("a/b/x.py")) == "E203 E204 W205 E300".split()
+        assert ign(tmpdir.join("a/y.py")) == "E203 E300".split()
+        assert ign(tmpdir.join("a/z.py")) is None
+
+    def test_ignores_all(self, testdir):
+        from pytest_pep8 import Ignorer
+        testdir.makeini("""
+            [pytest]
+            pep8ignore = E203
+                tests/*.py ALL
+                *.py E300
+        """)
+        testdir.tmpdir.ensure("xy.py")
+        testdir.tmpdir.ensure("tests/hello.py")
+        result = testdir.runpytest("--pep8", "-s")
+        assert result.ret == 0
+        result.stdout.fnmatch_lines([
+            "*collected 1*",
+            "*xy.py .*",
+            "*1 passed*",
+        ])
+
     def test_w293w292(self, testdir, example):
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            "*pep*ignore*available*",
+            "*plugins*pep8*",
             "*W293*",
             "*W292*",
         ])
         assert result.ret != 0
 
-    def test_w293_ignore(self, testdir, example):
-        testdir.makeini("""
-            [pytest]
-            pep8ignore = W293
-        """)
+    def test_mtime_caching(self, testdir, example):
+        testdir.tmpdir.ensure("hello.py")
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            "*pep8*ignore*W293*",
+            "*plugins*pep8*",
+            "*W293*",
+            "*W292*",
+            "*1 failed*1 passed*",
         ])
         assert result.ret != 0
-
-    def test_ignore_w293_w292(self, testdir, example):
+        result = testdir.runpytest("--pep8", )
+        result.stdout.fnmatch_lines([
+            "*W293*",
+            "*W292*",
+            "*1 failed*1 skipped*",
+        ])
         testdir.makeini("""
             [pytest]
-            pep8ignore = W292 W293
+            pep8ignore = *.py W293 W292
         """)
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            "*pep8*ignore*W292*W293*",
+            "*2 passed*",
         ])
-        assert result.ret == 0
 
 
 def test_ok_verbose(testdir):
