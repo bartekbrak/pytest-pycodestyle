@@ -43,7 +43,7 @@ class TestIgnores:
     def test_w293w292(self, testdir, example):
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            "*plugins*pep8*",
+            #"*plugins*pep8*",
             "*W293*",
             "*W292*",
         ])
@@ -53,7 +53,7 @@ class TestIgnores:
         testdir.tmpdir.ensure("hello.py")
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            "*plugins*pep8*",
+            #"*plugins*pep8*",
             "*W293*",
             "*W292*",
             "*1 failed*1 passed*",

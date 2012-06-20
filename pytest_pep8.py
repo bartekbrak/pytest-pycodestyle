@@ -3,7 +3,7 @@ import py
 import pytest
 import pep8
 
-__version__ = '0.9.2.dev2'
+__version__ = '1.0'
 
 HISTKEY = "pep8/mtimes"
 
