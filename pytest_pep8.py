@@ -3,7 +3,7 @@ import py
 import pytest
 import pep8
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 HISTKEY = "pep8/mtimes"
 
@@ -84,16 +84,18 @@ class Ignorer:
     def __init__(self, ignorelines, coderex=re.compile("[EW]\d\d\d")):
         self.ignores = ignores = []
         for line in ignorelines:
+            i = line.find("#")
+            if i != -1:
+                line = line[:i]
             try:
                 glob, ign = line.split(None, 1)
             except ValueError:
                 glob, ign = None, line
             if glob and coderex.match(glob):
                 glob, ign = None, line
-            if ign == "ALL":
+            ign = ign.split()
+            if "ALL" in ign:
                 ign = None
-            else:
-                ign = ign.split()
             ignores.append((glob, ign))
 
     def __call__(self, path):

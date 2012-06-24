@@ -27,8 +27,8 @@ class TestIgnores:
         testdir.makeini("""
             [pytest]
             pep8ignore = E203
-                tests/*.py ALL
                 *.py E300
+                tests/*.py ALL E203 # something
         """)
         testdir.tmpdir.ensure("xy.py")
         testdir.tmpdir.ensure("tests/hello.py")

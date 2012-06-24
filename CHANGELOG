@@ -1,3 +1,10 @@
+1.0.2
+----------------------------------------------
+
+- fix a parsing bug - # is now recognized as
+  as comment and ALL will now be recognized 
+  even if other codes are specified (nonsensically)
+
 1.0.1
 ----------------------------------------------
 
