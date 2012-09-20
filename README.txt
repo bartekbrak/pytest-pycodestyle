@@ -171,7 +171,7 @@ pep8 checker), you can configure it like this::
 
     # content of setup.cfg
     [pytest]
-    max_line_length = 99
+    pep8maxlinelength = 99
 
 Running PEP8 checks and no other tests
 ---------------------------------------------
