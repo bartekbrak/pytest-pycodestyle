@@ -3,7 +3,7 @@ import py
 import pytest
 import pep8
 
-__version__ = '1.0.2'
+__version__ = '1.0.3.dev1'
 
 HISTKEY = "pep8/mtimes"
 
@@ -47,7 +47,10 @@ class Pep8Item(pytest.Item, pytest.File):
 
     def __init__(self, path, parent, pep8ignore):
         super(Pep8Item, self).__init__(path, parent)
-        self.keywords['pep8'] = True
+        if hasattr(self, "markers"):
+            self.markers.pep8 = pytest.mark.pep8
+        else:
+            self.keywords["pep8"] = pytest.mark.pep8
         self.pep8ignore = pep8ignore
 
     def setup(self):

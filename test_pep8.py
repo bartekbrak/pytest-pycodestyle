@@ -1,4 +1,6 @@
+# coding=utf8
 
+import py
 pytest_plugins = "pytester",
 
 
@@ -100,3 +102,19 @@ def test_keyword_match(testdir):
         "*1 failed*",
     ])
     assert 'passed' not in result.stdout.str()
+
+
+def test_unicode_error(testdir):
+    x = testdir.tmpdir.join("x.py")
+    import codecs
+    f = codecs.open(str(x), "w", encoding="utf8")
+    f.write(py.builtin._totext("""
+# coding=utf8
+
+accent_map = {
+    u'\\xc0': 'a', # À -> a  non-ascii comment crashes it
+}
+""", "utf8"))
+    f.close()
+    result = testdir.runpytest("--pep8", x, "-s")
+    result.stdout.fnmatch_lines("*non-ascii comment*")
