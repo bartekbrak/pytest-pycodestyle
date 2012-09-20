@@ -104,6 +104,22 @@ def test_keyword_match(testdir):
     assert 'passed' not in result.stdout.str()
 
 
+def test_maxlinelength(testdir):
+    testdir.makeini("""
+        [pytest]
+        pep8maxlinelength = 50
+    """)
+    testdir.makepyfile("""
+# this line is longer than the configured max. line length
+""")
+    result = testdir.runpytest("--pep8", "-k pep8")
+    result.stdout.fnmatch_lines([
+        "*E501*",
+        "*1 failed*",
+    ])
+    assert 'passed' not in result.stdout.str()
+
+
 def test_unicode_error(testdir):
     x = testdir.tmpdir.join("x.py")
     import codecs

@@ -16,6 +16,8 @@ def pytest_addoption(parser):
         help="each line specifies a glob pattern and whitespace "
              "separated PEP8 errors or warnings which will be ignored, "
              "example: *.py W293")
+    parser.addini("pep8maxlinelength",
+        help="max. line length (default: %d)" % pep8.MAX_LINE_LENGTH)
 
 
 def pytest_sessionstart(session):
@@ -23,6 +25,8 @@ def pytest_sessionstart(session):
     if config.option.pep8:
         config._pep8ignore = Ignorer(config.getini("pep8ignore"))
         config._pep8mtimes = config.cache.get(HISTKEY, {})
+        config._max_line_length = int(config.getini("pep8maxlinelength")
+                                      or pep8.MAX_LINE_LENGTH)
 
 
 def pytest_collect_file(path, parent):
@@ -30,7 +34,7 @@ def pytest_collect_file(path, parent):
     if config.option.pep8 and path.ext == '.py':
         pep8ignore = config._pep8ignore(path)
         if pep8ignore is not None:
-            return Pep8Item(path, parent, pep8ignore)
+            return Pep8Item(path, parent, pep8ignore, config._max_line_length)
 
 
 def pytest_sessionfinish(session):
@@ -45,13 +49,14 @@ class Pep8Error(Exception):
 
 class Pep8Item(pytest.Item, pytest.File):
 
-    def __init__(self, path, parent, pep8ignore):
+    def __init__(self, path, parent, pep8ignore, max_line_length):
         super(Pep8Item, self).__init__(path, parent)
         if hasattr(self, "markers"):
             self.markers.pep8 = pytest.mark.pep8
         else:
             self.keywords["pep8"] = pytest.mark.pep8
         self.pep8ignore = pep8ignore
+        self.max_line_length = max_line_length
 
     def setup(self):
         pep8mtimes = self.config._pep8mtimes
@@ -62,7 +67,8 @@ class Pep8Item(pytest.Item, pytest.File):
 
     def runtest(self):
         call = py.io.StdCapture.call
-        found_errors, out, err = call(check_file, self.fspath, self.pep8ignore)
+        found_errors, out, err = call(check_file, self.fspath, self.pep8ignore,
+                                      self.max_line_length)
         if found_errors:
             raise Pep8Error(out, err)
         # update mtime only if test passed
@@ -111,6 +117,7 @@ class Ignorer:
         return l
 
 
-def check_file(path, pep8ignore):
-    checker = pep8.Checker(str(path), ignore=pep8ignore, show_source=1)
+def check_file(path, pep8ignore, max_line_length):
+    checker = pep8.Checker(str(path), ignore=pep8ignore, show_source=1,
+                           max_line_length=max_line_length)
     return checker.check_all()

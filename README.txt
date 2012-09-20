@@ -166,6 +166,13 @@ failure and it will ignore doc/conf.py alltogether::
 
 Note that doc/conf.py was not considered or imported.
 
+If you'ld like to have longer lines than 79 chars (which is the default for the
+pep8 checker), you can configure it like this::
+
+    # content of setup.cfg
+    [pytest]
+    max_line_length = 99
+
 Running PEP8 checks and no other tests
 ---------------------------------------------
 

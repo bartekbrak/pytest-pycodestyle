@@ -1,3 +1,9 @@
+1.0.3
+----------------------------------------------
+
+- added pep8maxlinelength ini setting to configure the maximum allowed
+  line length.
+
 1.0.2
 ----------------------------------------------
 
