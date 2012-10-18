@@ -51,10 +51,7 @@ class Pep8Item(pytest.Item, pytest.File):
 
     def __init__(self, path, parent, pep8ignore, max_line_length):
         super(Pep8Item, self).__init__(path, parent)
-        if hasattr(self, "markers"):
-            self.markers.pep8 = pytest.mark.pep8
-        else:
-            self.keywords["pep8"] = pytest.mark.pep8
+        self.keywords["pep8"] = pytest.mark.pep8
         self.pep8ignore = pep8ignore
         self.max_line_length = max_line_length
 
