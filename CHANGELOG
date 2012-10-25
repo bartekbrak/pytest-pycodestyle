@@ -3,6 +3,7 @@
 
 - added pep8maxlinelength ini setting to configure the maximum allowed
   line length.
+- add tox.ini and test_pep8.py to distribution
 
 1.0.2
 ----------------------------------------------
