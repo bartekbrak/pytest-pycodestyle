@@ -3,7 +3,7 @@ import py
 import pytest
 import pep8
 
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 
 HISTKEY = "pep8/mtimes"
 
@@ -51,7 +51,7 @@ class Pep8Item(pytest.Item, pytest.File):
 
     def __init__(self, path, parent, pep8ignore, max_line_length):
         super(Pep8Item, self).__init__(path, parent)
-        self.keywords["pep8"] = pytest.mark.pep8
+        self.keywords["pep8"] = True
         self.pep8ignore = pep8ignore
         self.max_line_length = max_line_length
 

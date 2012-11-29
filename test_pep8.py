@@ -134,3 +134,9 @@ accent_map = {
     f.close()
     result = testdir.runpytest("--pep8", x, "-s")
     result.stdout.fnmatch_lines("*non-ascii comment*")
+
+
+def test_strict(testdir):
+    testdir.makepyfile("")
+    result = testdir.runpytest("--strict", "--pep8")
+    assert result.ret == 0
