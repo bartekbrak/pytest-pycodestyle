@@ -179,10 +179,10 @@ Running PEP8 checks and no other tests
 You can also restrict your test run to only perform "pep8" tests
 and not any other tests by typing::
 
-    py.test --pep8 -k pep8
+    py.test --pep8 -m pep8
 
-This will only run tests that are marked with the "pep8" keyword
-which is added for the pep8 test items added by this plugin.
+This will only run test items with the "pep8" marker which this
+plugins adds dynamically.
 
 Notes
 -------------
