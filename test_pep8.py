@@ -96,7 +96,7 @@ def test_keyword_match(testdir):
             a=[ 1,123]
             #
     """)
-    result = testdir.runpytest("--pep8", "-k pep8")
+    result = testdir.runpytest("--pep8", "-mpep8")
     result.stdout.fnmatch_lines([
         "*E201*",
         "*1 failed*",
@@ -112,7 +112,7 @@ def test_maxlinelength(testdir):
     testdir.makepyfile("""
 # this line is longer than the configured max. line length
 """)
-    result = testdir.runpytest("--pep8", "-k pep8")
+    result = testdir.runpytest("--pep8", "-mpep8")
     result.stdout.fnmatch_lines([
         "*E501*",
         "*1 failed*",

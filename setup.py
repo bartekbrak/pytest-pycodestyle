@@ -11,5 +11,5 @@ if __name__ == "__main__":
         url='http://bitbucket.org/hpk42/pytest-pep8/',
         py_modules=['pytest_pep8'],
         entry_points={'pytest11': ['pep8 = pytest_pep8']},
-        install_requires=['pytest-cache', 'pytest>=2.3.dev14', 'pep8>=1.3', ],
+        install_requires=['pytest-cache', 'pytest>=2.4.2.dev1', 'pep8>=1.3', ],
     )

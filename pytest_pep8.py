@@ -51,7 +51,7 @@ class Pep8Item(pytest.Item, pytest.File):
 
     def __init__(self, path, parent, pep8ignore, max_line_length):
         super(Pep8Item, self).__init__(path, parent)
-        self.keywords["pep8"] = True
+        self.add_marker("pep8")
         self.pep8ignore = pep8ignore
         self.max_line_length = max_line_length
 
