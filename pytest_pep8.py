@@ -2,6 +2,7 @@ import re
 import py
 import pytest
 import pep8
+import os
 
 __version__ = '1.0.5'
 
@@ -102,6 +103,8 @@ class Ignorer:
             ign = ign.split()
             if "ALL" in ign:
                 ign = None
+            if glob and "/" != os.sep and "/" in glob:
+                glob = glob.replace("/", os.sep)
             ignores.append((glob, ign))
 
     def __call__(self, path):

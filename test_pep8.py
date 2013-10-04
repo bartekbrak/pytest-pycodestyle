@@ -1,5 +1,5 @@
 # coding=utf8
-
+import pytest
 import py
 pytest_plugins = "pytester",
 
@@ -120,6 +120,7 @@ def test_maxlinelength(testdir):
     assert 'passed' not in result.stdout.str()
 
 
+@pytest.mark.xfail("sys.platform == 'win32'")
 def test_unicode_error(testdir):
     x = testdir.tmpdir.join("x.py")
     import codecs
