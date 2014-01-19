@@ -5,6 +5,7 @@ if __name__ == "__main__":
         name='pytest-pep8',
         description='pytest plugin to check PEP8 requirements',
         long_description=open("README.txt").read(),
+        license="MIT license",
         version='1.0.5',
         author='Holger Krekel and Ronny Pfannschmidt',
         author_email='holger.krekel@gmail.com',
