@@ -1,13 +1,10 @@
-xxx
+1.0.6
 ----------
 
 - fix tests to accomodate newer pep version which is more sensitive
   to detecting "E265 too many spaces"
 
 - add py34 to tox.ini
-
-1.0.6
---------------
 
 - clarified in setup.py that license is MIT
 
