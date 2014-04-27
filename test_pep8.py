@@ -13,7 +13,7 @@ class TestIgnores:
     def pytest_funcarg__example(self, request):
         testdir = request.getfuncargvalue("testdir")
         p = testdir.makepyfile("")
-        p.write("class AClass:\n    pass\n       \n\n#too many spaces")
+        p.write("class AClass:\n    pass\n       \n\n# too many spaces")
         return p
 
     def test_ignores(self, tmpdir):
@@ -45,7 +45,7 @@ class TestIgnores:
     def test_w293w292(self, testdir, example):
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            #"*plugins*pep8*",
+            # "*plugins*pep8*",
             "*W293*",
             "*W292*",
         ])
@@ -55,7 +55,7 @@ class TestIgnores:
         testdir.tmpdir.ensure("hello.py")
         result = testdir.runpytest("--pep8", )
         result.stdout.fnmatch_lines([
-            #"*plugins*pep8*",
+            # "*plugins*pep8*",
             "*W293*",
             "*W292*",
             "*1 failed*1 passed*",
