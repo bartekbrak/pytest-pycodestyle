@@ -1,6 +1,6 @@
 .. image:: https://drone.io/bitbucket.org/pytest-dev/pytest-pep8/status.png
    :target: https://drone.io/bitbucket.org/pytest-dev/pytest-pep8/latest
-.. image:: https://pypip.in/v/pytest/badge.png
+.. image:: https://pypip.in/v/pytest-pep8/badge.png
    :target: https://pypi.python.org/pypi/pytest-pep8
 
 py.test plugin for efficiently checking PEP8 compliance 
@@ -197,4 +197,3 @@ The repository of this plugin is at http://bitbucket.org/hpk42/pytest-pep8
 For more info on py.test see http://pytest.org
 
 The code is partially based on Ronny Pfannschmidt's pytest-codecheckers plugin.
-
