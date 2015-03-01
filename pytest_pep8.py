@@ -26,8 +26,9 @@ def pytest_sessionstart(session):
     if config.option.pep8:
         config._pep8ignore = Ignorer(config.getini("pep8ignore"))
         config._pep8mtimes = config.cache.get(HISTKEY, {})
-        config._max_line_length = int(config.getini("pep8maxlinelength")
-                                      or pep8.MAX_LINE_LENGTH)
+        config._max_line_length = int(
+            config.getini("pep8maxlinelength") or
+            pep8.MAX_LINE_LENGTH)
 
 
 def pytest_collect_file(path, parent):
