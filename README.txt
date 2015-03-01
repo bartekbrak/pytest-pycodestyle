@@ -1,8 +1,13 @@
+.. image:: https://drone.io/bitbucket.org/pytest-dev/pytest-pep8/status.png
+   :target: https://drone.io/bitbucket.org/pytest-dev/pytest-pep8/latest
+.. image:: https://pypip.in/v/pytest/badge.png
+   :target: https://pypi.python.org/pypi/pytest-pep8
+
 py.test plugin for efficiently checking PEP8 compliance 
-========================================================================
+=======================================================
 
 Usage
----------
+-----
 
 install via::
 
@@ -30,7 +35,7 @@ starting from the command line arguments.
 
 
 A little example 
------------------------
+----------------
 
 If you have a pep8-violating file like this::
 
@@ -174,7 +179,7 @@ pep8 checker), you can configure it like this::
     pep8maxlinelength = 99
 
 Running PEP8 checks and no other tests
----------------------------------------------
+--------------------------------------
 
 You can also restrict your test run to only perform "pep8" tests
 and not any other tests by typing::
@@ -185,7 +190,7 @@ This will only run test items with the "pep8" marker which this
 plugins adds dynamically.
 
 Notes
--------------
+-----
 
 The repository of this plugin is at http://bitbucket.org/hpk42/pytest-pep8
 
