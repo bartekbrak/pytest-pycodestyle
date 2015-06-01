@@ -9,7 +9,7 @@ if __name__ == "__main__":
         version='1.0.7.dev1',
         author='Holger Krekel and Ronny Pfannschmidt',
         author_email='holger.krekel@gmail.com',
-        url='http://bitbucket.org/hpk42/pytest-pep8/',
+        url='https://bitbucket.org/pytest-dev/pytest-pep8',
         py_modules=['pytest_pep8'],
         entry_points={'pytest11': ['pep8 = pytest_pep8']},
         install_requires=['pytest-cache', 'pytest>=2.4.2', 'pep8>=1.3', ],
