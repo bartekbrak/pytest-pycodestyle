@@ -192,7 +192,7 @@ plugins adds dynamically.
 Notes
 -----
 
-The repository of this plugin is at http://bitbucket.org/hpk42/pytest-pep8
+The repository of this plugin is at http://bitbucket.org/pytest-dev/pytest-pep8
 
 For more info on py.test see http://pytest.org
 
