@@ -47,22 +47,23 @@ you can run it with the plugin installed::
 
     $ py.test --pep8
     =========================== test session starts ============================
-    platform linux2 -- Python 2.7.3 -- pytest-2.2.5.dev2
-    pep8: performing checks
-    collecting ... collected 1 items
+    platform linux2 -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /tmp/doc-exec-2, inifile: 
+    plugins: pep8, cache
+    collected 1 items
     
     myfile.py F
     
     ================================= FAILURES =================================
     ________________________________ PEP8-check ________________________________
-    /home/hpk/tmp/doc-exec-259/myfile.py:2:10: E201 whitespace after '('
+    /tmp/doc-exec-2/myfile.py:2:10: E201 whitespace after '('
     somefunc( 123,456)
              ^
-    /home/hpk/tmp/doc-exec-259/myfile.py:2:14: E231 missing whitespace after ','
+    /tmp/doc-exec-2/myfile.py:2:14: E231 missing whitespace after ','
     somefunc( 123,456)
                  ^
     
-    ========================= 1 failed in 0.01 seconds =========================
+    ========================= 1 failed in 0.00 seconds =========================
 
 For the meaning of (E)rror and (W)arning codes, see the error
 output when running against your files or checkout `pep8.py
@@ -77,28 +78,30 @@ and run again::
 
     $ py.test --pep8
     =========================== test session starts ============================
-    platform linux2 -- Python 2.7.3 -- pytest-2.2.5.dev2
-    pep8: performing checks
-    collecting ... collected 1 items
+    platform linux2 -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /tmp/doc-exec-2, inifile: 
+    plugins: pep8, cache
+    collected 1 items
     
     myfile.py .
     
-    ========================= 1 passed in 0.01 seconds =========================
+    ========================= 1 passed in 0.00 seconds =========================
 
 the pep8 check now is passing. Moreover, if
 you run it once again (and report skip reasons)::
 
     $ py.test --pep8 -rs 
     =========================== test session starts ============================
-    platform linux2 -- Python 2.7.3 -- pytest-2.2.5.dev2
-    pep8: performing checks
-    collecting ... collected 1 items
+    platform linux2 -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /tmp/doc-exec-2, inifile: 
+    plugins: pep8, cache
+    collected 1 items
     
     myfile.py s
     ========================= short test summary info ==========================
-    SKIP [1] /home/hpk/p/pytest-pep8/pytest_pep8.py:63: file(s) previously passed PEP8 checks
+    SKIP [1] /home/hpk/p/pytest-pep8/pytest_pep8.py:65: file(s) previously passed PEP8 checks
     
-    ======================== 1 skipped in 0.01 seconds =========================
+    ======================== 1 skipped in 0.00 seconds =========================
 
 you can see that the pep8 check was skipped because
 the file has not been modified since it was last checked.
@@ -110,13 +113,14 @@ will trigger the pep8 checking code to run once again::
 
     $ py.test --pep8 --clearcache
     =========================== test session starts ============================
-    platform linux2 -- Python 2.7.3 -- pytest-2.2.5.dev2
-    pep8: performing checks
-    collecting ... collected 1 items
+    platform linux2 -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2
+    rootdir: /tmp/doc-exec-2, inifile: 
+    plugins: pep8, cache
+    collected 1 items
     
     myfile.py .
     
-    ========================= 1 passed in 0.01 seconds =========================
+    ========================= 1 passed in 0.00 seconds =========================
 
 .. _pep8ignore:
 
@@ -135,9 +139,8 @@ This would globally prevent complaints about two whitespace issues.
 Rerunning with the above example will now look better::
 
     $ py.test -q  --pep8
-    collecting ... collected 1 items
     .
-    1 passed in 0.01 seconds
+    1 passed in 0.00 seconds
 
 If you have some files where you want to specifically ignore 
 some errors or warnings you can start a pep8ignore line with 
@@ -160,12 +163,13 @@ failure and it will ignore doc/conf.py alltogether::
 
     $ py.test --pep8 -v # verbose shows what is ignored
     =========================== test session starts ============================
-    platform linux2 -- Python 2.7.3 -- pytest-2.2.5.dev2 -- /home/hpk/venv/1/bin/python
-    pep8: performing checks
-    cachedir: /home/hpk/tmp/doc-exec-259/.cache
+    platform linux2 -- Python 2.7.6 -- py-1.4.30 -- pytest-2.7.2 -- /home/hpk/venv/clean/bin/python
+    cachedir: /tmp/doc-exec-2/.cache
+    rootdir: /tmp/doc-exec-2, inifile: setup.cfg
+    plugins: pep8, cache
     collecting ... collected 1 items
     
-    myfile.py:0: PEP8-check(ignoring E201) PASSED
+    myfile.py PASSED
     
     ========================= 1 passed in 0.01 seconds =========================
 
