@@ -1,3 +1,26 @@
+This is a quick fork of https://bitbucket.org/pytest-dev/pytest-pep8 to 
+make it use the newest version of pep8, which is now named pycodestyle. 
+
+See:
+- https://github.com/PyCQA/pycodestyle/issues/466
+- https://bitbucket.org/pytest-dev/pytest-pep8/issues/15/pep8-changed-name-to-pycodestyle
+
+
+I also converted to git from git://repo.or.cz/fast-export.git.
+I did not contact the authors. I am not the author of this code, Holger 
+Krekel and Ronny Pfannschmidt are. They seemt o have abandoned the code 
+and I need it fast. The original MIT License seems to allow this. 
+
+I plan to upload it to pypi and provide reasonable maintenance. 
+I plan to contact the authors soon.
+
+The changes are minimal, I will not change word pep8 everywhere, I will
+change it in enough places to make this work.
+
+---
+
+
+
 .. image:: https://drone.io/bitbucket.org/pytest-dev/pytest-pep8/status.png
    :target: https://drone.io/bitbucket.org/pytest-dev/pytest-pep8/latest
 .. image:: https://pypip.in/v/pytest-pep8/badge.png

@@ -1,7 +1,7 @@
 import re
 import py
 import pytest
-import pep8
+import pycodestyle as pep8
 import os
 
 __version__ = '1.0.6'
